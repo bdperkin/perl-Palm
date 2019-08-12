@@ -1,6 +1,6 @@
 Name:           perl-Palm-PDB
 Version:        1.016
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Parse Palm database files
 License:        GPL+ or Artistic
 
@@ -20,6 +20,8 @@ BuildRequires:  perl(strict)
 BuildRequires:  perl(warnings)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
+Provides:       perl(Palm::PDB)
+Provides:       perl(Palm::Raw)
 %{?perl_default_filter}
 
 %description
@@ -36,8 +38,8 @@ make %{?_smp_mflags}
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
-
 %{_fixperms} $RPM_BUILD_ROOT/*
+rm -f $RPM_BUILD_ROOT/usr/lib64/perl5/vendor_perl/auto/Palm/PDB/.packlist
 
 %check
 make test
@@ -49,6 +51,9 @@ make test
 %{_mandir}/man3/Palm*
 
 %changelog
+* Mon Aug 12 2019 Brandon Perkins <bperkins@redhat.com> - 1.016-3
+- Fix build issue
+
 * Sat Jan 31 2015 Emmanuel Seyman <emmanuel@seyman.fr> - 1.016-2
 - Take into account package review (#1187873)
 

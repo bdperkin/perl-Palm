@@ -1,6 +1,6 @@
 Name:           perl-Palm
 Version:        1.014
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Palm OS utility functions
 License:        GPL+ or Artistic
 
@@ -10,7 +10,7 @@ Source0:        http://www.cpan.org/authors/id/C/CJ/CJM/Palm-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl
 BuildRequires:  perl(constant)
-BuildRequires:  perl(ExtUtils::MakeMaker) >= 6.76
+BuildRequires:  perl(ExtUtils::MakeMaker) >= 6.68
 BuildRequires:  perl(Exporter)
 BuildRequires:  perl(Palm::PDB)
 BuildRequires:  perl(Palm::Raw)
@@ -23,6 +23,14 @@ BuildRequires:  perl(vars)
 BuildRequires:  perl(warnings)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
+Provides:       perl(Palm::StdAppInfo)
+Provides:       perl(Palm::ZirePhoto)
+Provides:       perl(Palm::Datebook)
+Provides:       perl(Palm::DateTime)
+Provides:       perl(Palm::Address)
+Provides:       perl(Palm::Mail)
+Provides:       perl(Palm::Memo)
+Provides:       perl(Palm::ToDo)
 Provides:       perl-p5-Palm = %{version}-%{release}
 Obsoletes:      perl-p5-Palm =< 1.013-4
 %{?perl_default_filter}
@@ -41,6 +49,7 @@ make %{?_smp_mflags}
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
 %{_fixperms} $RPM_BUILD_ROOT/*
+rm -f $RPM_BUILD_ROOT/usr/lib64/perl5/vendor_perl/auto/Palm/.packlist
 
 %check
 make test
@@ -52,6 +61,9 @@ make test
 %{_mandir}/man3/Palm*
 
 %changelog
+* Mon Aug 12 2019 Brandon Perkins <bperkins@redhat.com> - 1.014-3
+- Fix build issue
+
 * Tue Feb 03 2015 Emmanuel Seyman <emmanuel@seyman.fr> - 1.014-2
 - Take into account review comments (#1188648)
 
